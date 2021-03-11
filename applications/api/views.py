@@ -1,16 +1,9 @@
-from django.urls import path, include
-from django.contrib.auth.models import User
-from rest_framework import serializers, viewsets
-
-
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
+from rest_framework import viewsets
+from applications.database.models import Cars
+from applications.api.serializers import CarSerializer
 
 
 # ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class CarViewSet(viewsets.ModelViewSet):
+    queryset = Cars.objects.all()
+    serializer_class = CarSerializer
