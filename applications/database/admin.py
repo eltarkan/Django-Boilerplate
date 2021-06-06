@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Cars
+from .models import IntelRequirementForm
 
-admin.site.register(Cars)
+admin.site.register(IntelRequirementForm)
