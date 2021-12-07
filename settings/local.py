@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import dotenv_values
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
-
+CONFIG = dotenv_values(".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -23,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'p&k3sa3i_e8vbx1so4qskl!&t5*kp7by$cg^sw9k+df%k5)_y^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = CONFIG["DEBUG"]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -78,11 +81,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'boilerplate',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': 5432,
+        'NAME': CONFIG["DB_NAME"],
+        'USER': CONFIG["DB_USER"],
+        'PASSWORD': CONFIG["DB_PASSWORD"],
+        'HOST': CONFIG["DB_HOST"],
+        'PORT': CONFIG["DB_PORT"],
     }
 }
 
@@ -137,3 +140,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
+
+JWT_SECRET_KEY = CONFIG["JWT_SECRET_KEY"]
+JWT_ALGORITHM = "HS256"
+
+CORS_ORIGIN_ALLOW_ALL = True
